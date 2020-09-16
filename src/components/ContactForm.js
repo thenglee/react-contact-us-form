@@ -39,6 +39,11 @@ const ContactForm = () => {
 
   return (
     <div>
+      {result && (
+        <p className={`${result.success ? 'success' : 'error'}`}>
+          {result.message}
+        </p>
+      )}
       <form onSubmit={sendEmail}>
         <Form.Group controlId="name">
           <Form.Label>Full Name</Form.Label>
