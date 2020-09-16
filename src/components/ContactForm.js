@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import { Form, Button } from 'react-bootstrap'
 
 const ContactForm = () => {
@@ -8,12 +9,23 @@ const ContactForm = () => {
     subject: '',
     message: ''
   })
+  const [result, setResult] = useState(null)
 
   const sendEmail = event => {
     event.preventDefault()
 
-    console.log('We will fill this up shortly.')
-    // code to trigger sending email
+    axios
+      .post('/send', { ...state })
+      .then(response => {
+        setResult(response.data)
+        setState({ name: '', email: '', subject: '', message: '' })
+      })
+      .catch(() => {
+        setResult({
+          success: false,
+          message: 'Something went wrong. Try again later'
+        })
+      })
   }
 
   const onInputChange = event => {
